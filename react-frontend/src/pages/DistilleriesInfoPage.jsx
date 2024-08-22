@@ -2,6 +2,7 @@ import {useState, useEffect} from 'react'
 import axios from 'axios'
 import Table from '../components/Table'
 import Spinner from '../components/Spinner'
+const constants = require("../constant")
 
 const DistilleriesInfoPage = () => {
   const [distilleryInfo, setDistilleryInfo] = useState([])
@@ -12,7 +13,7 @@ const DistilleriesInfoPage = () => {
 
   useEffect(() =>{
     const get_countries = async () =>{
-      const response = await axios.get("http://localhost:5000/distilleries-info")
+      const response = await axios.get(constants.BACKEND_URL+"distilleries-info")
       setCountries(response.data.countries)
     }
     get_countries()
@@ -23,7 +24,7 @@ const DistilleriesInfoPage = () => {
     const country = e.target.value;
     setSelectedCountry(country)
     const get_distillery_info = async () =>{
-      const response = await axios.get(`http://localhost:5000/distilleries-info/${country}`)
+      const response = await axios.get(`${constants.BACKEND_URL}distilleries-info/${country}`)
       setDistilleryInfo(response.data.info)
     }
     get_distillery_info() 
