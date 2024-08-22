@@ -8,7 +8,7 @@ const AuctionsInfoPage = () => {
     const [loading, setLoading] = useState(true)
     useEffect(()=>{
         const getAuctionInfo = async () =>{
-            const response = await axios.get("http://api-flask:5000/auctions-info")
+            const response = await axios.get("http://34.23.26.155:5000/auctions-info")
             // console.log(response.data.auctions)
             setAuctionInfo(response.data.auctions)
           }
