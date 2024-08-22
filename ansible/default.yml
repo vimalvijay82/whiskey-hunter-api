@@ -59,6 +59,8 @@
         name: vimal
         groups: docker
         append: yes
+    - name: Stop the containers
+      command: docker-compose -f /home/vimal/docker-compose.yml down
 
     - name: Pull Frontend Docker Image
       docker_image:
