@@ -60,17 +60,13 @@
         groups: docker
         append: yes
 
-    - name: Pull DB Docker image
-      docker_image:
-        name: vimalvijay10/bingelist-db
-        source: pull
     - name: Pull Frontend Docker Image
       docker_image:
-        name: vimalvijay10/bingelist-frontend
+        name: vimalvijay10/whiskey-frontend
         source: pull
     - name: Pull backend Docker Image
       docker_image:
-        name: vimalvijay10/bingelist-backend
+        name: vimalvijay10/whiskey-backend
         source: pull
 
     - name: Run Docker Compose
