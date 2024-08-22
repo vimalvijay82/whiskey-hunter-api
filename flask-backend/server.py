@@ -64,10 +64,12 @@ def slugs_info():
 
 @app.route("/auctions-info", methods=["GET"])
 def auctions_info():
+    print("request received")
     api_url = "https://whiskyhunter.net/api/auctions_info"
     response = requests.get(api_url)
 
     if response.status_code == 200:
+        print("api response obtained successfully")
         data = response.json()
         return jsonify({"auctions":data})
     else:
