@@ -1,0 +1,77 @@
+---
+- name: Setup Docker on Debian VM and run docker-compose
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install required system packages
+      apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+          - virtualenv
+        state: latest
+        update_cache: true
+
+    - name: Add Docker GPG apt Key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker Repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu focal stable
+        state: present
+
+    - name: Update apt and install Docker packages
+      apt:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-compose
+        state: latest
+        update_cache: true
+
+    - name: Start docker
+      systemd:
+        name: docker
+        enabled: yes
+        state: started
+
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install Docker Compose Plugin
+      apt:
+        name: docker-compose-plugin
+        state: present
+    
+    - name: Transfer docker-compose.yml to VM
+      copy:
+        src: ./docker-compose.yml
+        dest: /home/vimal/docker-compose.yml
+
+    - name: Add user to the Docker group
+      user:
+        name: vimal
+        groups: docker
+        append: yes
+
+    - name: Pull DB Docker image
+      docker_image:
+        name: vimalvijay10/bingelist-db
+        source: pull
+    - name: Pull Frontend Docker Image
+      docker_image:
+        name: vimalvijay10/bingelist-frontend
+        source: pull
+    - name: Pull backend Docker Image
+      docker_image:
+        name: vimalvijay10/bingelist-backend
+        source: pull
+
+    - name: Run Docker Compose
+      command: docker-compose -f /home/vimal/docker-compose.yml up -d

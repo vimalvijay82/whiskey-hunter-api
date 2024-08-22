@@ -1,0 +1,21 @@
+version: '3.3'
+
+services:
+  api-flask:
+    labels:
+      shipyard.route: '/api/flask/'
+      shipyard.route.rewrite: true
+    image: vimalvijay10/whiskey-backend
+    ports:
+      - 5000:5000
+    restart: unless-stopped
+  
+  client-react-nginx:
+    labels:
+      shipyard.primary-route: true
+      shipyard.route: '/'
+    image: vimalvijay10/whiskey-frontend
+    ports:
+      - 80:8080
+    restart: unless-stopped
+  
