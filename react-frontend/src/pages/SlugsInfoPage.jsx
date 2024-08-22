@@ -1,7 +1,6 @@
 import {useState, useEffect} from 'react'
 import axios from 'axios'
 import Table from '../components/Table'
-const constants = require("../constant")
 
 const SlugsInfoPage = () => {
 
@@ -11,7 +10,7 @@ const SlugsInfoPage = () => {
 
     useEffect(() =>{
         const get_slugs = async () =>{
-          const response = await axios.get(constants.BACKEND_URL+"slugs-info")
+          const response = await axios.get("http://34.23.26.155:5000/slugs-info")
           setSlugs(response.data.slugs.sort())
         }
         get_slugs()
@@ -21,7 +20,7 @@ const SlugsInfoPage = () => {
         const slug = e.target.value;
         setSelectedSlug(slug)
         const get_slug_info = async () =>{
-          const response = await axios.get(`${constants.BACKEND_URL}slugs-info/${slug}`)
+          const response = await axios.get(`http://34.23.26.155:5000/slugs-info/${slug}`)
           setSlugInfo(response.data.info)
         }
         get_slug_info() 

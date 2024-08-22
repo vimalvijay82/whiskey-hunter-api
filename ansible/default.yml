@@ -61,15 +61,15 @@
         append: yes
 
     - name: Stop all running containers
-      command: docker stop $(docker ps -q)
+      shell: docker stop $(docker ps -q)
       ignore_errors: yes
 
     - name: Remove all containers
-      command: docker rm $(docker ps -a -q)
+      shell: docker rm $(docker ps -a -q)
       ignore_errors: yes
 
     - name: Remove all Docker images
-      command: docker rmi $(docker images -q)
+      shell: docker rmi $(docker images -q)
       ignore_errors: yes
 
     - name: Pull Frontend Docker Image

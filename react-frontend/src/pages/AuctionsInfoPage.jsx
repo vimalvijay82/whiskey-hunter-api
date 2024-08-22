@@ -2,14 +2,13 @@ import {useState, useEffect} from 'react'
 import Table from '../components/Table'
 import axios from 'axios'
 import Spinner from '../components/Spinner'
-const constants = require("../constant")
 
 const AuctionsInfoPage = () => {
     const [auctionInfo, setAuctionInfo] = useState([])
     const [loading, setLoading] = useState(true)
     useEffect(()=>{
         const getAuctionInfo = async () =>{
-            const response = await axios.get(constants.BACKEND_URL+"auctions-info")
+            const response = await axios.get("http://34.23.26.155:5000/auctions-info")
             // console.log(response.data.auctions)
             setAuctionInfo(response.data.auctions)
           }
