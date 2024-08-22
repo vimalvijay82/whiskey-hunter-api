@@ -50,8 +50,6 @@ pipeline{
                 {
                     script 
                     {
-                        def publicIP = sh(returnStdout: true, script: 'terraform output -raw instance_ip').trim()
-                        writeFile file: 'hosts.ini', text: "[web]\n${publicIP} ansible_user=vimal"
                         sh 'ansible-playbook -i hosts.ini default.yml'
                     }
                 }
