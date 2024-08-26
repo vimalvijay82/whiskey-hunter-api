@@ -68,7 +68,7 @@ const Table = ({data}, {type="default"}) => {
       };
 
     return (
-        <div className="max-w-8xl mx-auto">
+        <div className="max-w-8xl mx-auto p-8">
           <div className="flex flex-col">
             <div className="overflow-x-auto shadow-md sm:rounded-lg">
                 <div className="inline-block min-w-full align-middle">
@@ -80,7 +80,7 @@ const Table = ({data}, {type="default"}) => {
                                       <th key={key} scope="col" 
                                         onClick={() => handleSort(key)}
                                         className="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600">
-                                      {key}
+                                      {key.replace(/_/g, ' ').toUpperCase()}
                                       </th>
                                     ))}
                                 </tr>

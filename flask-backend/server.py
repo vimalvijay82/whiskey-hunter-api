@@ -20,6 +20,17 @@ def check_slug(slug):
         return slug
     return None
 
+@app.route("/distilleries", methods=["GET"])
+def distilleries():
+    api_url = "https://whiskyhunter.net/api/distilleries_info/"
+    response = requests.get(api_url)
+
+    if response.status_code == 200:
+        data = response.json()
+        return jsonify(data)
+    else:
+        return jsonify({'error': 'Failed to fetch API'}, response.status_code)
+
 @app.route("/distilleries-info", methods=["GET"])
 def distilleries_info():
     api_url = "https://whiskyhunter.net/api/distilleries_info/"
