@@ -6,6 +6,7 @@ const Table = ({data}, {type="default"}) => {
     const [sortConfig, setSortConfig] = useState({ key: '', direction: '' })
     const itemsPerPage = 20
     const [pageNumbers, setPageNumbers] = useState([])
+    const [searchQuery, setSearchQuery] = useState('')
 
     const paginate = (pageNumber) =>{
         setCurrentPage(pageNumber)
@@ -29,10 +30,17 @@ const Table = ({data}, {type="default"}) => {
         
       }, [data]);
 
+      const filteredItems = sortedItems.filter(item => 
+        keys.some(key => 
+            item[key].toString().toLowerCase().includes(searchQuery.toLowerCase())
+        )
+    );
+
+
       const indexOfLastItem = currentPage * itemsPerPage
       const indexOfFirstItem = indexOfLastItem - itemsPerPage
-      const currentItems = sortedItems.slice(indexOfFirstItem, indexOfLastItem)
-      const totalPages = Math.ceil(data.length / itemsPerPage)
+      const currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem)
+      const totalPages = Math.ceil(filteredItems.length / itemsPerPage)
       
     
       const handleSort = (key) => {
@@ -73,6 +81,15 @@ const Table = ({data}, {type="default"}) => {
             <div className="overflow-x-auto shadow-md sm:rounded-lg">
                 <div className="inline-block min-w-full align-middle">
                     <div className="overflow-hidden">
+                      <div className="mb-4">
+                          <input
+                              type="text"
+                              placeholder="Search..."
+                              value={searchQuery}
+                              onChange={(e) => setSearchQuery(e.target.value)}
+                              className="p-2 border border-gray-300 rounded"
+                          />
+                        </div>
                         <table className="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-700">
                             <thead className="bg-gray-100 dark:bg-gray-700">
                                 <tr>
@@ -120,19 +137,6 @@ const Table = ({data}, {type="default"}) => {
               </button>
                 ) 
             )}
-            {/* {Array.from({ length: totalPages }, (_, index) => (
-              <button
-                key={index + 1}
-                onClick={() => paginate(index + 1)}
-                className={`px-4 py-2 mx-1 ${
-                  currentPage === index + 1
-                    ? 'bg-blue-500 text-white'
-                    : 'bg-gray-200 text-gray-700'
-                } rounded`}
-              >
-                {index + 1}
-              </button>
-            ))} */}
           </div>
         </div>
     )
